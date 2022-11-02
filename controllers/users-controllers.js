@@ -17,7 +17,7 @@ const getUsers = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  const { emal, password } = req.body;
+  const { email, password } = req.body;
   const identifiedUser = DUMMY_USERS.find((user) => user.email === email);
   if (
     !identifiedUser ||
