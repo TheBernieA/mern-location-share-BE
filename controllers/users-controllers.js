@@ -6,31 +6,12 @@ const prisma = new PrismaClient()
 
 const HttpError = require("../models/http-error");
 
-/*
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "Ben",
-    email: "test@test.com",
-    password: "123456",
-  },
-];
-*/
-
-const users = async () => {
-  return await prisma.user.findMany()
-}
-
 const getUsers = async (req, res, next) => {
-  //res.json({ users: DUMMY_USERS });
-  res.json({ users: users });
+  res.json({ users: await prisma.user.findMany() });
 };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  //const identifiedUser = DUMMY_USERS.find((user) => user.email === email);
-  console.log(users)
-  //const identifiedUser = users.find((user) => user.email === email);
   const identifiedUser = await prisma.user.findFirst({
     where: { email : email }
   })
@@ -56,8 +37,6 @@ const signup = async (req, res, next) => {
   }
   const { name, email, password } = req.body;
 
-  //const hasUser = DUMMY_USERS.find((user) => user.email === email);
-  //const hasUser = users.find((user) => user.email === email);
   const hasUser = await prisma.user.findFirst({
     where: { email : email }
   })
@@ -72,7 +51,6 @@ const signup = async (req, res, next) => {
     password: password,
   };
 
-  //DUMMY_USERS.push(createdUser);
   const user_created = await prisma.user.create({
     data: createdUser
   })
