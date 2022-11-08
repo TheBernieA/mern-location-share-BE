@@ -20,7 +20,10 @@ router.post(
 
 router.patch(
   "/:pid",
-  [check("title").not().isEmpty(), check("description").isLength({ min: 5 })],
+  [
+    check("title").not().isEmpty(),
+    check("description").isLength({ min: 5 })
+  ],
   placesController.updatePlace
 );
 

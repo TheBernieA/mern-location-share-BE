@@ -24,4 +24,6 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "Unknown error occured" });
 });
 
-app.listen(3000);
+const PORT = process.env.PORT || 3001
+
+app.listen(PORT);

@@ -1,6 +1,10 @@
 const uuid = require("uuid");
 const { validationResult } = require("express-validator");
 
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
+
 const HttpError = require("../models/http-error");
 const getCoordsForAddress = require("../utils/location");
 
