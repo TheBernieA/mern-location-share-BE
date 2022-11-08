@@ -23,6 +23,7 @@ model Place {
   title   String   @db.VarChar(255)
   description    String 
   address String    @db.VarChar(255)
+  location Json?
   creator    User     @relation(fields: [creatorId], references: [id])
   creatorId  Int
 }

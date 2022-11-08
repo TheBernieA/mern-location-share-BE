@@ -41,19 +41,17 @@ const createPlace = async (req, res, next) => {
 
   const { title, description, address, creator } = req.body;
 
-  /*
   let coordinates;
   try {
     coordinates = await getCoordsForAddress(address);
   } catch (error) {
     return next(error);
   }
-  */
   
   const dataPlace = {
     title: title,
     description: description,
-    //location: coordinates,
+    location: coordinates,
     address: address,
     creatorId: parseInt(creator),
   };
@@ -68,7 +66,7 @@ const updatePlace = async (req, res, next) => {
   if (!errors.isEmpty()) {
     throw new HttpError("Invalid inputs passed, please check you data", 422);
   }
-  const pid = req.params.pid;
+  const pid = parseInt(req.params.pid);
   const { title, description } = req.body;
 
   const placeToUpd = await prisma.place.findFirst({
@@ -89,14 +87,14 @@ const updatePlace = async (req, res, next) => {
 };
 
 const deletePlace = async (req, res, next) => {
-  const pid = req.params.pid;
+  const pid = parseInt(req.params.pid);
   const placeToDelete = await prisma.place.findFirst({
     where: { id : pid }
   })
   if (placeToDelete === null) {
     return next(new HttpError("Could not find a place for this id", 404));
   }
-  const deletePlace = await prisma.place.update({
+  const deletePlace = await prisma.place.delete({
     where: { id: pid }
   })
   res.status(200).json({ message: "Place Deleted" });
